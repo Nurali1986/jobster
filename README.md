@@ -45,7 +45,7 @@
 - **Отчёты за период (`/reports`)**:
   - Выбор начальной и конечной даты периода, а также быстрые пресеты («Сегодня», «Последние 7 дней», «Последние 30 дней»).
   - Точный расчёт времени пересечения каждой записи с выбранным интервалом `[start, end)`.
-  - Сводная таблица по сотрудникам (количество задач и общее время в формате `12 ч 35 мин`) + детализация по каждой задаче.
+  - Сводная таблица по сотрудникам (количество задач и общее время в формате `12 ч 35 мин`) и детализация по каждой задаче.
   - Информативное состояние `«За выбранный период записей нет»`, если за период нет данных.
 
 ---
@@ -72,42 +72,42 @@
 ├── prisma/
 │   ├── migrations/
 │   │   └── 20261027000000_init/
-│   │       └── migration.sql      # DDL таблиц, FK (RESTRICT) и partial unique index
-│   ├── schema.prisma              # Схема базы данных Prisma
-│   └── seed.ts                    # Скрипт заполнения вымышленными данными (только вручную)
+│   │       └── migration.sql        # DDL таблиц, FK (RESTRICT) и partial unique index
+│   ├── schema.prisma                # Схема базы данных Prisma
+│   └── seed.ts                      # Скрипт заполнения вымышленными данными (только вручную)
 ├── src/
 │   ├── app/
 │   │   ├── api/
-│   │   │   ├── employees/         # GET, POST /api/employees и GET, PATCH /api/employees/[id]
-│   │   │   ├── health/            # GET /api/health (проверка БД и миграций)
-│   │   │   ├── reports/           # GET /api/reports?start=...&end=...
-│   │   │   ├── time-entries/      # GET /api/time-entries
-│   │   │   └── timer/             # POST /api/timer/start и POST /api/timer/stop
-│   │   ├── employees/page.tsx     # Страница «Сотрудники»
-│   │   ├── time-tracking/page.tsx # Страница «Учёт времени»
-│   │   ├── reports/page.tsx       # Страница «Отчёты»
-│   │   ├── layout.tsx             # Корневой layout (русский язык)
-│   │   └── page.tsx               # Страница «Обзор» (Dashboard)
+│   │   │   ├── employees/           # GET, POST /api/employees и GET, PATCH /api/employees/[id]
+│   │   │   ├── health/              # GET /api/health (проверка БД и миграций)
+│   │   │   ├── reports/             # GET /api/reports?start=...&end=...
+│   │   │   ├── time-entries/        # GET /api/time-entries
+│   │   │   └── timer/               # POST /api/timer/start и POST /api/timer/stop
+│   │   ├── employees/page.tsx       # Страница «Сотрудники»
+│   │   ├── time-tracking/page.tsx   # Страница «Учёт времени»
+│   │   ├── reports/page.tsx         # Страница «Отчёты»
+│   │   ├── layout.tsx               # Корневой layout (русский язык)
+│   │   └── page.tsx                 # Страница «Обзор» (Dashboard)
 │   ├── components/
-│   │   ├── ui/                    # Переиспользуемые UI-компоненты (shadcn/ui)
-│   │   ├── app-shell.tsx          # Адаптивный Sidebar (Desktop) + мобильная навигация
-│   │   └── live-timer.tsx         # Живой секундомер HH:MM:SS
+│   │   ├── ui/                      # Переиспользуемые UI-компоненты (shadcn/ui)
+│   │   ├── app-shell.tsx            # Адаптивный Sidebar (Desktop) + мобильная навигация
+│   │   └── live-timer.tsx           # Живой секундомер HH:MM:SS
 │   └── lib/
-│       ├── api-response.ts        # Единая обработка ошибок и HTTP-статусов API
-│       ├── client-date.ts         # Форматирование UTC-дат в локальное время браузера
-│       ├── errors.ts              # Классы бизнес-исключений (400, 404, 409)
-│       ├── prisma.ts              # Singleton-экземпляр PrismaClient
-│       ├── services.ts            # Бизнес-логика и транзакции работы с БД
-│       ├── time.ts                # Чистые функции расчёта длительности и обрезки по периоду
-│       └── validation.ts          # Схемы валидации Zod
+│       ├── api-response.ts          # Единая обработка ошибок и HTTP-статусов API
+│       ├── client-date.ts           # Форматирование UTC-дат в локальное время браузера
+│       ├── errors.ts                # Классы бизнес-исключений (400, 404, 409)
+│       ├── prisma.ts                # Singleton-экземпляр PrismaClient
+│       ├── services.ts              # Бизнес-логика и транзакции работы с БД
+│       ├── time.ts                  # Чистые функции расчёта длительности и обрезки по периоду
+│       └── validation.ts            # Схемы валидации Zod
 ├── tests/
-│   ├── unit/time.test.ts          # Модульные тесты форматирования и расчётов периодов
+│   ├── unit/time.test.ts            # Модульные тесты форматирования и расчётов периодов
 │   ├── integration/services.test.ts # Интеграционные тесты с реальной тестовой БД PostgreSQL
-│   └── e2e/worktime.spec.ts       # Сквозные браузерные тесты Playwright
-├── Dockerfile                     # Multi-stage сборка для production
-├── docker-compose.yml             # Оркестрация контейнеров web и db (PostgreSQL)
-├── docker-entrypoint.sh           # Автоматический запуск prisma migrate deploy при старте
-└── .env.example                   # Шаблон переменных окружения
+│   └── e2e/worktime.spec.ts         # Сквозные браузерные тесты Playwright
+├── Dockerfile                       # Multi-stage сборка для production
+├── docker-compose.yml               # Оркестрация контейнеров web и db (PostgreSQL)
+├── docker-entrypoint.sh             # Автоматический запуск prisma migrate deploy при старте
+└── .env.example                     # Шаблон переменных окружения
 ```
 
 ---
@@ -121,6 +121,7 @@ docker compose up --build -d
 ```
 
 Что происходит при запуске:
+
 1. Запускается контейнер `worktime-db` (`postgres:16-alpine`) с именованным томом `worktime_postgres_data`.
 2. После прохождения `healthcheck` базы данных (`pg_isready`) стартует контейнер `worktime-web`.
 3. Скрипт `docker-entrypoint.sh` автоматически применяет миграции (`prisma migrate deploy`) и запускает сервер Next.js на порту `3000`.
@@ -132,7 +133,7 @@ docker compose up --build -d
   ```bash
   docker compose down
   ```
-  При следующем `docker compose up` все сотрудники и записи времени останутся на месте.
+  При следующем `docker compose up -d` все сотрудники и записи времени останутся на месте.
 - Полная остановка **с удалением тома базы данных** (все данные будут стёрты):
   ```bash
   docker compose down -v
@@ -193,7 +194,7 @@ NODE_ENV=development
   ```bash
   npm run db:seed
   ```
-  Или внутри запущенного Docker-контейнера:
+  Или внутри запущенного контейнера:
   ```bash
   docker compose exec web npx tsx prisma/seed.ts
   ```
@@ -229,7 +230,7 @@ NODE_ENV=development
 
 | Метод | Маршрут | Описание | Коды ответа |
 | :--- | :--- | :--- | :--- |
-| `GET` | `/api/employees` | Список сотрудников (`?search=...&active=true\|false`) | `200` |
+| `GET` | `/api/employees` | Список сотрудников (`?search=...&active=true`) | `200` |
 | `POST` | `/api/employees` | Создание сотрудника (`{ name, position?, email? }`) | `201`, `400`, `409` |
 | `GET` | `/api/employees/[id]` | Получение данных сотрудника по ID | `200`, `404` |
 | `PATCH` | `/api/employees/[id]` | Обновление данных / деактивация (`{ name?, position?, email?, isActive? }`) | `200`, `400`, `404`, `409` |
@@ -287,6 +288,7 @@ NODE_ENV=development
 ## 12. Использованные ИИ-инструменты, модели и примеры запросов
 
 ### Инструменты и модели
+
 - **ИИ-ассистент / среда**: Google Antigravity (агентная среда разработки)
 - **Модель**: Gemini 4 Argon (Medium)
 
@@ -313,13 +315,13 @@ NODE_ENV=development
 2. **Пробел в имени зависимости в `package.json`**:
    - *Проблема*: При формировании `package.json` пакет `" tailwindcss-animate"` был записан с ведущим пробелом в ключе JSON, что приводило бы к ошибке валидации имени пакета в `npm install`.
    - *Исправление*: Ключ исправлен на `"tailwindcss-animate"` до установки пакетов.
-2. **Пограничный случай нулевой длительности при мгновенной остановке таймера**:
+3. **Пограничный случай нулевой длительности при мгновенной остановке таймера**:
    - *Проблема*: В быстрых автоматизированных тестах между `startTimer` и `stopTimer` могло пройти менее `1 мс`, из-за чего `startTime` и `endTime` совпадали (`durationMs = 0`), и запись отфильтровывалась из отчёта за период (`clampedMs <= 0`).
    - *Исправление*: В `stopTimer` (`src/lib/services.ts`) добавлена нижняя граница `const safeEndMs = Math.max(Date.now(), targetEntry.startTime.getTime() + 1)`, что гарантирует положительную длительность (`>= 1 мс`) для любой завершённой задачи.
-3. **Окончания строк CRLF в `docker-entrypoint.sh` на Windows**:
+4. **Окончания строк CRLF в `docker-entrypoint.sh` на Windows**:
    - *Проблема*: При сборке Docker-образа на ОС Windows скрипт `docker-entrypoint.sh` с окончаниями строк `CRLF` (`\r\n`) внутри Linux-контейнера (`node:20-alpine`) вызывает ошибку запуска шебанга `#!/bin/sh\r`.
    - *Исправление*: Добавлен файл `.gitattributes` (`*.sh text eol=lf`) и команда нормализации `RUN sed -i 's/\r$//' ./docker-entrypoint.sh && chmod +x ./docker-entrypoint.sh` непосредственно в `Dockerfile`.
-4. **Сбой запуска Docker Desktop из-за битого WSL-дистрибутива по умолчанию в локальном окружении**:
+5. **Сбой запуска Docker Desktop из-за битого WSL-дистрибутива по умолчанию в локальном окружении**:
    - *Проблема*: Команда `docker ps` возвращала ошибку подключения к pipe, так как дистрибутив WSL по умолчанию (`Ubuntu`) ссылался на отсутствующий виртуальный диск `ext4.vhdx`.
    - *Исправление*: Выполнено переключение рабочего дистрибутива `wsl --set-default docker-desktop` и перезапуск службы Docker Desktop, после чего контейнеры PostgreSQL и тесты успешно запустились.
 
@@ -330,5 +332,3 @@ NODE_ENV=development
 - В соответствии с условиями тестового задания в приложении отсутствуют аутентификация, авторизация и ролевая модель (все пользователи работают в едином рабочем пространстве компании).
 - Ручное редактирование исторических интервалов времени (`startTime` / `endTime`) через UI не предусмотрено: время фиксируется строго по факту запуска и остановки таймера сервером.
 - Экспорт отчётов в файлы (CSV / XLSX / PDF) не входит в рамки текущего MVP.
-#   j o b s t e r  
- 
